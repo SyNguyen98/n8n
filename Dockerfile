@@ -23,7 +23,9 @@ RUN curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/ter
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 # Environment variables for n8n
-ENV DB_TYPE=postgresdb \
+ENV N8N_PORT=5678 \
+    N8N_HOST=0.0.0.0 \
+    DB_TYPE=postgresdb \
     DB_POSTGRESDB_SSL=true \
     DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false \
     N8N_BASIC_AUTH_ACTIVE=true \
@@ -34,4 +36,4 @@ WORKDIR /app
 
 EXPOSE 5678
 
-CMD ["n8n"]
+CMD ["n8n", "start"]
