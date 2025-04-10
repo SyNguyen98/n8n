@@ -22,13 +22,16 @@ RUN curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/ter
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
+# Environment variables for n8n
+ENV DB_TYPE=postgresdb \
+    DB_POSTGRESDB_SSL=true \
+    DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false \
+    N8N_BASIC_AUTH_ACTIVE=true \
+
 USER node
 
-# Set working directory (optional)
 WORKDIR /app
 
-# Expose n8n port
 EXPOSE 5678
 
-# Start n8n
 CMD ["n8n"]
