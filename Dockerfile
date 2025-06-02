@@ -11,10 +11,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install n8n globally
-RUN npm install -g n8n
+RUN npm install -g n8n@latest
 
 # Install Terraform
-ENV TERRAFORM_VERSION=1.11.3
+ENV TERRAFORM_VERSION=1.12.1
 RUN curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
     && unzip terraform.zip -d /usr/local/bin/ \
     && rm terraform.zip
