@@ -34,11 +34,13 @@ VOLUME /root/.ollama
 # Pull the 'nomic-embed-text' model during the Docker image build process.
 # This ensures the model is already present in the image when the container starts,
 # speeding up initial deployment.
-# We run `ollama serve` in the background (`&`) to start the Ollama server,
-# then `ollama pull` the model, list it to confirm, and finally `pkill ollama`
-# to stop the temporary server used only for the pull operation.
+# We run `ollama serve` in the background (`&`) to start the Ollama server.
+# Then, we add a `sleep 5` to give the server a few seconds to fully initialize before
+# `ollama pull` attempts to connect. Finally, we `ollama list` to confirm the model
+# is there, and `pkill ollama` to stop the temporary server used only for the pull operation.
 # This makes the model part of the image's filesystem layer.
 RUN (ollama serve &) && \
+    sleep 5 && \
     ollama pull nomic-embed-text && \
     ollama list && \
     pkill ollama
